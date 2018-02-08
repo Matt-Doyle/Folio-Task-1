@@ -53,7 +53,7 @@ class Vote:
         self.democratic = Party(initial_state['democratic'])
         self.republican = Party(initial_state['republican'])
         self.independent = Party(initial_state['independent'])
-        self.total = Party(initial_state['party'])
+        self.total = Party(initial_state['total'])
 
         pass
 

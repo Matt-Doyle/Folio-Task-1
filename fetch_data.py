@@ -16,31 +16,6 @@ class VoteTally:
         self.no = initial_state['no']
         self.present = initial_state['present']
         self.not_voting = initial_state['not_voting']
-        pass
-
-    def set_yes(self, value):
-        self.yes = value
-
-    def get_yes(self):
-        return self.yes
-
-    def set_no(self, value):
-        self.no = value
-
-    def get_no(self):
-        return self.no
-
-    def set_present(self, value):
-        self.present = value
-
-    def get_present(self):
-        return self.present
-
-    def set_not_voting(self, value):
-        self.not_voting = value
-
-    def get_not_voting(self):
-        return self.not_voting
 
 
 class Party(VoteTally):
@@ -49,9 +24,52 @@ class Party(VoteTally):
 
         self.majority_position = initial_state['majority_position']
 
-        pass
 
-    def get_majority_position(self):
+# A data structure pertaining to a member of congress
+class Member:
+    def __init__(self, initial_state):
+        self.id = initial_state['id']
+        self.title = initial_state['title']
+        self.short_title = initial_state['short_title']
+        self.api_uri = initial_state['api_uri']
+        self.first_name = initial_state['first_name']
+        self.middle_name = initial_state['middle_name']
+        self.last_name = initial_state['last_name']
+        self.suffix = initial_state['suffix']
+        self.date_of_birth = initial_state['date_of_birth']
+        self.party = initial_state['party']
+        self.leadership_role = initial_state['leadership_role']
+        self.twitter_account = initial_state['twitter_account']
+        self.facebook_account = initial_state['facebook_account']
+        self.youtube_account = initial_state['youtube_account']
+        self.govtrack_id = initial_state['govtrack_id']
+        self.cspan_id = initial_state['cspan_id']
+        self.votesmart_id = initial_state['votesmart_id']
+        self.icpsr_id = initial_state['icpsr_id']
+        self.crp_id = initial_state['crp_id']
+        self.google_entity_id = initial_state['google_entity_id']
+        self.fec_candidate_id = initial_state['fec_candidate_id']
+        self.url = initial_state['url']
+        self.rss_url = initial_state['rss_url']
+        self.contact_form = initial_state['contact_form']
+        self.in_office = initial_state['in_office']
+        self.dw_nominate = initial_state['dw_nominate']
+        self.ideal_point = initial_state['ideal_point']
+        self.seniority = initial_state['seniority']
+        self.next_election = initial_state['next_election']
+        self.total_votes = initial_state['total_votes']
+        self.missed_votes = initial_state['missed_votes']
+        self.total_present = initial_state['total_present']
+        self.ocd_id = initial_state['ocd_id']
+        self.office = initial_state['office']
+        self.phone = initial_state['phone']
+        self.fax = initial_state['fax']
+        self.state = initial_state['state']
+        self.senate_class = initial_state['senate_class']
+        self.state_rank = initial_state['state_rank']
+        self.lis_id = initial_state['lis_id']
+        self.missed_votes_pct = initial_state['missed_votes_pct']
+        self.votes_with_party_pct = initial_state['votes_with_party_pct']
         pass
 
 
@@ -81,127 +99,6 @@ class Vote:
         self.total = VoteTally(initial_state['total'])
         self.positions = initial_state['positions']  # Replace this with positions[member_id] = {stuff}
         self.vacant_seats = initial_state['vacant_seats']
-
-        pass
-
-    def set_congress(self, value):
-        self.congress = value
-
-    def get_congress(self):
-        return self.congress
-
-    def set_chamber(self, value):
-        self.chamber = value
-
-    def get_chamber(self):
-        return self.chamber
-
-    def set_roll_call(self, value):
-        self.roll_call = value
-
-    def get_roll_call(self):
-        return self.roll_call
-
-    def set_source(self, value):
-        self.source = value
-
-    def get_source(self):
-        return self.source
-
-    def set_url(self, value):
-        self.url = value
-
-    def get_url(self):
-        return self.url
-
-    def set_bill(self, value): # TODO: IMPLEMENT
-        pass
-
-    def get_bill(self):  # TODO: IMPLEMENT
-        pass
-
-    def set_amendment(self, value):  # TODO: IMPLEMENT
-        pass
-
-    def get_amendment(self):  # TODO: IMPLEMENT
-        pass
-
-    def set_question(self, value):
-        self.question = value
-
-    def get_question(self):
-        return self.question
-
-    def set_description(self, value):
-        self.description = value
-
-    def get_description(self):
-        return self.description
-
-    def set_vote_type(self, value):
-        self.vote_type = value
-
-    def get_vote_type(self):
-        return self.vote_type
-
-    def set_date(self, value):
-        self.date = value
-
-    def get_date(self):
-        return self.date
-
-    def set_time(self, value):
-        self.time = value
-
-    def get_time(self):
-        return self.time
-
-    def set_result(self, value):
-        self.result = value
-
-    def get_result(self):
-        return self.result
-
-    def set_democratic(self, value):
-        self.democratic = value
-
-    def get_democratic(self):
-        return self.democratic
-
-    def set_republican(self, value):
-        self.republican = value
-
-    def get_republican(self):
-        return self.republican
-
-    def set_independent(self, value):
-        self.independent = value
-
-    def get_independent(self):
-        return self.independent
-
-    def set_total(self, value):
-        self.total = value
-
-    def get_total(self):
-        return self.total
-
-    def set_positions(self, value):
-        self.positions = value
-
-    def get_positions(self):
-        return self.positions
-
-    def set_vacant_seats(self, value):
-        self.vacant_seats = value
-
-    def get_vacant_seats(self):
-        return self.vacant_seats
-
-
-class Member:
-    def __init__(self):
-        pass
 
 
 def get_api_key():

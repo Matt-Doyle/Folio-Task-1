@@ -17,3 +17,5 @@ A project designed to fulfill the criteria specified in "Folio Task 1 - A Charac
 	* PyCharm easily supports adding weightings and labels to edges of the graph. The weightings and labels on the edges will both be equal to the number of votes that the members of congress have cast similarly.
 4. You must write an explanation of what your weighting actually represents and how you ‘measured’ this (200 word minimum). Include in your explanation any special features like directed edges, multiple edges between vertices, etc. and why you have used these.
 	* This is explained further down the page.
+
+### Justification and Explanation of Task

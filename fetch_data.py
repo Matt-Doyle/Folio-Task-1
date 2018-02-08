@@ -72,7 +72,7 @@ class Vote:
         self.question = initial_state['question']
         self.description = initial_state['description']
         self.vote_type = initial_state['vote_type']
-        self.data = initial_state['date']
+        self.date = initial_state['date']
         self.time = initial_state['time']
         self.result = initial_state['result']
         self.democratic = Party(initial_state['democratic'])
@@ -84,62 +84,119 @@ class Vote:
 
         pass
 
+    def set_congress(self, value):
+        self.congress = value
+
     def get_congress(self):
-        pass
+        return self.congress
+
+    def set_chamber(self, value):
+        self.chamber = value
 
     def get_chamber(self):
-        pass
+        return self.chamber
+
+    def set_roll_call(self, value):
+        self.roll_call = value
 
     def get_roll_call(self):
-        pass
+        return self.roll_call
+
+    def set_source(self, value):
+        self.source = value
 
     def get_source(self):
-        pass
+        return self.source
+
+    def set_url(self, value):
+        self.url = value
 
     def get_url(self):
+        return self.url
+
+    def set_bill(self, value): # TODO: IMPLEMENT
         pass
 
-    def get_bill(self):
+    def get_bill(self):  # TODO: IMPLEMENT
         pass
 
-    def get_amendment(self):
+    def set_amendment(self, value):  # TODO: IMPLEMENT
         pass
+
+    def get_amendment(self):  # TODO: IMPLEMENT
+        pass
+
+    def set_question(self, value):
+        self.question = value
 
     def get_question(self):
-        pass
+        return self.question
+
+    def set_description(self, value):
+        self.description = value
 
     def get_description(self):
-        pass
+        return self.description
+
+    def set_vote_type(self, value):
+        self.vote_type = value
 
     def get_vote_type(self):
-        pass
+        return self.vote_type
+
+    def set_date(self, value):
+        self.date = value
 
     def get_date(self):
-        pass
+        return self.date
+
+    def set_time(self, value):
+        self.time = value
 
     def get_time(self):
-        pass
+        return self.time
+
+    def set_result(self, value):
+        self.result = value
 
     def get_result(self):
-        pass
+        return self.result
+
+    def set_democratic(self, value):
+        self.democratic = value
 
     def get_democratic(self):
-        pass
+        return self.democratic
+
+    def set_republican(self, value):
+        self.republican = value
 
     def get_republican(self):
-        pass
+        return self.republican
+
+    def set_independent(self, value):
+        self.independent = value
 
     def get_independent(self):
-        pass
+        return self.independent
+
+    def set_total(self, value):
+        self.total = value
 
     def get_total(self):
-        pass
+        return self.total
+
+    def set_positions(self, value):
+        self.positions = value
 
     def get_positions(self):
-        pass
+        return self.positions
+
+    def set_vacant_seats(self, value):
+        self.vacant_seats = value
 
     def get_vacant_seats(self):
-        pass
+        return self.vacant_seats
 
 
 class Member:

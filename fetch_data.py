@@ -10,23 +10,48 @@ class Bill:
         pass
 
 
-class Party:
+class VoteTally:
     def __init__(self, initial_state):
+        self.yes = initial_state['yes']
+        self.no = initial_state['no']
+        self.present = initial_state['present']
+        self.not_voting = initial_state['not_voting']
         pass
+
+    def set_yes(self, value):
+        self.yes = value
 
     def get_yes(self):
-        pass
+        return self.yes
+
+    def set_no(self, value):
+        self.no = value
 
     def get_no(self):
-        pass
+        return self.no
+
+    def set_present(self, value):
+        self.present = value
 
     def get_present(self):
-        pass
+        return self.present
+
+    def set_not_voting(self, value):
+        self.not_voting = value
 
     def get_not_voting(self):
+        return self.not_voting
+
+
+class Party(VoteTally):
+    def __init__(self, initial_state):
+        VoteTally.__init__(self, initial_state)
+
+        self.majority_position = initial_state['majority_position']
+
         pass
 
-    def is_majority_position(self):
+    def get_majority_position(self):
         pass
 
 
@@ -52,8 +77,10 @@ class Vote:
         self.result = initial_state['result']
         self.democratic = Party(initial_state['democratic'])
         self.republican = Party(initial_state['republican'])
-        self.independent = Party(initial_state['independent'])
-        self.total = Party(initial_state['total'])
+        self.independent = VoteTally(initial_state['independent'])
+        self.total = VoteTally(initial_state['total'])
+        self.positions = initial_state['positions']  # Replace this with positions[member_id] = {stuff}
+        self.vacant_seats = initial_state['vacant_seats']
 
         pass
 
@@ -63,7 +90,7 @@ class Vote:
     def get_chamber(self):
         pass
 
-    def get_rollcall(self):
+    def get_roll_call(self):
         pass
 
     def get_source(self):
@@ -75,7 +102,7 @@ class Vote:
     def get_bill(self):
         pass
 
-    def get_amendent(self):
+    def get_amendment(self):
         pass
 
     def get_question(self):

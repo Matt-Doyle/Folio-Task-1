@@ -2,6 +2,8 @@ import urllib.request
 import json
 from pynode.main import *
 
+from typing import Dict
+
 API_KEY = ""
 
 
@@ -27,50 +29,53 @@ class Party(VoteTally):
 
 # A data structure pertaining to a member of congress
 class Member:
-    def __init__(self, initial_state):
-        self.id = initial_state['id']
-        self.title = initial_state['title']
-        self.short_title = initial_state['short_title']
-        self.api_uri = initial_state['api_uri']
-        self.first_name = initial_state['first_name']
-        self.middle_name = initial_state['middle_name']
-        self.last_name = initial_state['last_name']
-        self.suffix = initial_state['suffix']
-        self.date_of_birth = initial_state['date_of_birth']
-        self.party = initial_state['party']
-        self.leadership_role = initial_state['leadership_role']
-        self.twitter_account = initial_state['twitter_account']
-        self.facebook_account = initial_state['facebook_account']
-        self.youtube_account = initial_state['youtube_account']
-        self.govtrack_id = initial_state['govtrack_id']
-        self.cspan_id = initial_state['cspan_id']
-        self.votesmart_id = initial_state['votesmart_id']
-        self.icpsr_id = initial_state['icpsr_id']
-        self.crp_id = initial_state['crp_id']
-        self.google_entity_id = initial_state['google_entity_id']
-        self.fec_candidate_id = initial_state['fec_candidate_id']
-        self.url = initial_state['url']
-        self.rss_url = initial_state['rss_url']
-        self.contact_form = initial_state['contact_form']
-        self.in_office = initial_state['in_office']
-        self.dw_nominate = initial_state['dw_nominate']
-        self.ideal_point = initial_state['ideal_point']
-        self.seniority = initial_state['seniority']
-        self.next_election = initial_state['next_election']
-        self.total_votes = initial_state['total_votes']
-        self.missed_votes = initial_state['missed_votes']
-        self.total_present = initial_state['total_present']
-        self.ocd_id = initial_state['ocd_id']
-        self.office = initial_state['office']
-        self.phone = initial_state['phone']
-        self.fax = initial_state['fax']
-        self.state = initial_state['state']
-        self.senate_class = initial_state['senate_class']
-        self.state_rank = initial_state['state_rank']
-        self.lis_id = initial_state['lis_id']
-        self.missed_votes_pct = initial_state['missed_votes_pct']
-        self.votes_with_party_pct = initial_state['votes_with_party_pct']
-        pass
+    def __init__(self, initial_state: Dict):
+        self.id = initial_state.get('id')
+        self.title = initial_state.get('title')
+        self.short_title = initial_state.get('short_title')
+        self.api_uri = initial_state.get('api_uri')
+        self.first_name = initial_state.get('first_name')
+        self.middle_name = initial_state.get('middle_name')
+        self.last_name = initial_state.get('last_name')
+        self.suffix = initial_state.get('suffix')
+        self.date_of_birth = initial_state.get('date_of_birth')
+        self.party = initial_state.get('party')
+        self.leadership_role = initial_state.get('leadership_role')
+        self.twitter_account = initial_state.get('twitter_account')
+        self.facebook_account = initial_state.get('facebook_account')
+        self.youtube_account = initial_state.get('youtube_account')
+        self.govtrack_id = initial_state.get('govtrack_id')
+        self.cspan_id = initial_state.get('cspan_id')
+        self.votesmart_id = initial_state.get('votesmart_id')
+        self.icpsr_id = initial_state.get('icpsr_id')
+        self.crp_id = initial_state.get('crp_id')
+        self.google_entity_id = initial_state.get('google_entity_id')
+        self.fec_candidate_id = initial_state.get('fec_candidate_id')
+        self.url = initial_state.get('url')
+        self.rss_url = initial_state.get('rss_url')
+        self.contact_form = initial_state.get('contact_form')
+        self.in_office = initial_state.get('in_office')
+        self.dw_nominate = initial_state.get('dw_nominate')
+        self.ideal_point = initial_state.get('ideal_point')
+        self.seniority = initial_state.get('seniority')
+        self.next_election = initial_state.get('next_election')
+        self.total_votes = initial_state.get('total_votes')
+        self.missed_votes = initial_state.get('missed_votes')
+        self.total_present = initial_state.get('total_present')
+        self.ocd_id = initial_state.get('ocd_id')
+        self.office = initial_state.get('office')
+        self.phone = initial_state.get('phone')
+        self.fax = initial_state.get('fax')
+        self.state = initial_state.get('state')
+        self.senate_class = initial_state.get('senate_class')
+        self.state_rank = initial_state.get('state_rank')
+        self.lis_id = initial_state.get('lis_id')
+        self.missed_votes_pct = initial_state.get('missed_votes_pct')
+        self.votes_with_party_pct = initial_state.get('votes_with_party_pct')
+
+    @property
+    def full_name(self) -> str:
+        return self.first_name + " " + self.last_name
 
 
 class Vote:
@@ -79,26 +84,56 @@ class Vote:
         # Populate class with data taken from JSON returned by ProPublica's Congress API request.
         # Result is one of the votes returned by a vote endpoint request.
 
-        self.congress = initial_state['congress']
-        self.session = initial_state['session']
-        self.roll_call = initial_state['roll_call']
-        self.chamber = initial_state['chamber']
-        self.source = initial_state['source']
-        self.url = initial_state['url']
-        self.bill = Bill(initial_state['bill'])
-        self.amendment = initial_state['amendment']
-        self.question = initial_state['question']
-        self.description = initial_state['description']
-        self.vote_type = initial_state['vote_type']
-        self.date = initial_state['date']
-        self.time = initial_state['time']
-        self.result = initial_state['result']
-        self.democratic = Party(initial_state['democratic'])
-        self.republican = Party(initial_state['republican'])
-        self.independent = VoteTally(initial_state['independent'])
-        self.total = VoteTally(initial_state['total'])
-        self.positions = initial_state['positions']  # Replace this with positions[member_id] = {stuff}
+        self.congress = initial_state['vote']['congress']
+        self.session = initial_state['vote']['session']
+        self.roll_call = initial_state['vote']['roll_call']
+        self.chamber = initial_state['vote']['chamber']
+        self.source = initial_state['vote']['source']
+        self.url = initial_state['vote']['url']
+        self.bill = Bill(initial_state['vote']['bill'])
+        self.amendment = initial_state['vote']['amendment']
+        self.question = initial_state['vote']['question']
+        self.description = initial_state['vote']['description']
+        self.vote_type = initial_state['vote']['vote_type']
+        self.date = initial_state['vote']['date']
+        self.time = initial_state['vote']['time']
+        self.result = initial_state['vote']['result']
+        self.democratic = Party(initial_state['vote']['democratic'])
+        self.republican = Party(initial_state['vote']['republican'])
+        self.independent = VoteTally(initial_state['vote']['independent'])
+        self.total = VoteTally(initial_state['vote']['total'])
+        self.positions = {}
+
+        positions = initial_state['vote']['positions']
+        for member in positions:
+            self.positions[member['member_id']] = member['vote_position']
+
         self.vacant_seats = initial_state['vacant_seats']
+
+    def __str__(self):
+        vote_tostr = ""
+        vote_tostr += "congress: " + str(self.congress)
+        vote_tostr += "\nsession: " + str(self.session)
+        vote_tostr += "\nroll_call: " + str(self.roll_call)
+        vote_tostr += "\nchamber: " + str(self.chamber)
+        vote_tostr += "\nsource: " + str(self.source)
+        vote_tostr += "\nurl: " + str(self.url)
+        vote_tostr += "\nbill: " + str(self.bill)
+        vote_tostr += "\namendment: " + str(self.amendment)
+        vote_tostr += "\nquestion: " + str(self.question)
+        vote_tostr += "\ndescription: " + str(self.description)
+        vote_tostr += "\nvote_type: " + str(self.vote_type)
+        vote_tostr += "\ndate: " + str(self.date)
+        vote_tostr += "\ntime: " + str(self.time)
+        vote_tostr += "\nresult: " + str(self.result)
+        vote_tostr += "\ndemocratic: " + str(self.democratic)
+        vote_tostr += "\nrepublican: " + str(self.republican)
+        vote_tostr += "\nindependent: " + str(self.independent)
+        vote_tostr += "\ntotal: " + str(self.total)
+        vote_tostr += "\npositions: " + str(self.positions)
+        vote_tostr += "\nvacant_seats: " + str(self.vacant_seats)
+
+        return vote_tostr
 
 
 def get_api_key():
@@ -109,17 +144,22 @@ def get_api_key():
 
 
 # Chamber: "house", "senate"
-def get_members(chamber):
+def get_members(chamber: str) -> Dict[str, Member]:
     request_str = "https://api.propublica.org/congress/v1/115/{chamber}/members.json".format(chamber=chamber)
     request = urllib.request.Request(request_str, headers={'X-API-Key': API_KEY})
     with urllib.request.urlopen(request) as res:
         chamber_members = json.loads(res.read().decode('utf-8'))
 
-    return chamber_members['results']
+    member_arr = {}
+
+    for i in chamber_members['results'][0]['members']:
+        member_arr[i['id']] = Member(i)
+
+    return member_arr
 
 
 # Chamber: "both", "house", "senate"
-def get_recent_votes(chamber):
+def get_recent_votes(chamber: str):
 
     request_str = "https://api.propublica.org/congress/v1/{chamber}/votes/recent.json".format(chamber=chamber)
     request = urllib.request.Request(request_str, headers={'X-API-Key': API_KEY})
@@ -129,18 +169,18 @@ def get_recent_votes(chamber):
     if recent_votes['status'] != 'OK':  # Consider doing something if API status != OK
         pass
 
-    return recent_votes['results']
+    return parse_recent_votes(recent_votes['results'])
 
 
-def get_vote(vote_uri):
+def get_vote(vote_uri: str):
     request = urllib.request.Request(vote_uri, headers={'X-API-Key': API_KEY})
     with urllib.request.urlopen(request) as res:
-        vote_data = json.loads(res.read().decode('utf-8'))
+        vote_data = Vote(json.loads(res.read().decode('utf-8'))['results']['votes'])
 
     return vote_data
 
 
-def parse_recent_votes(recent_votes):
+def parse_recent_votes(recent_votes) -> Dict[int, Vote]:
     vote_count = recent_votes['num_results']
     vote_arr = recent_votes['votes']
     vote_data = {}
@@ -149,25 +189,46 @@ def parse_recent_votes(recent_votes):
         vote_id = vote_arr[i]['roll_call']
         vote_data[vote_id] = get_vote(vote_arr[i]['vote_uri'])
 
-        print(vote_data[vote_id])
-
     return vote_data
 
 get_api_key()
-parse_recent_votes(get_recent_votes("house"))
+
+def pynode_run():
+
+    graph.add_node(id="Fetching Data")
+
+    members = get_members("senate")
+    recent_votes = get_recent_votes("senate")
+
+    graph.remove_node("Fetching Data")
+
+    for i in members:
+        graph.add_node(id=members[i].id, value=members[i].full_name)
+
+    for i in recent_votes:
+        positions: Dict[str, str] = recent_votes[i].positions
+
+        # Preproccess the dictionary and add people who voted the same way to a new array.
+        # As the algorithm is O(n^2) for adding edges, this will likely reduce the amount of operations by approximately
+
+        yes_list = []
+        no_list = []
+
+        for j in positions:
+            print(positions[j])
+            if positions[j].lower() == 'yes':
+                yes_list.append(j)
+            elif positions[j].lower() == 'no':
+                no_list.append(j)
+
+        for member_x in yes_list:
+            for member_y in yes_list:
+                if member_x == member_y:
+                    continue
+
+                graph.add_edge(member_x, member_y)
+
+        break
 
 
-#def pynode_run():
-    #members = getMembers("house")[0]['members']
-    #recent_votes = parseRecentVotes(getRecentVotes("house"))
-
-    #vote_edges = {}
-
-    #for i in recent_votes:
-    #    vote_edges[i['name']] = i
-
-    #for i in members:
-    #    graph.add_node(id=(i['first_name'] + " " + i['last_name']))
-
-
-#begin_pynode(pynode_run)
+begin_pynode(pynode_run)

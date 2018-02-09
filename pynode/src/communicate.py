@@ -37,7 +37,9 @@ def execute_run_function():
 
 def send_data(s):
     # Format the string correctly for JavaScript
-    s = s.replace("\\n", "\\\\n")
+    s = s.replace("\\", "\\\\")
+    s = s.replace("'", "\\'")
+    s = s.replace('"', '\\"')
     pynode_process.stdin.write(("pynode:" + s + "\n").encode())
     pynode_process.stdin.flush()
 
@@ -100,6 +102,8 @@ def open_connection():
             pynode_process = subprocess.Popen([os.path.join(APP_DIR, "cef/win32/pynode.exe")], shell=False, cwd=APP_DIR, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         elif operating_system == "macosx":
             pynode_process = subprocess.Popen([os.path.join(APP_DIR, "cef/macosx/pynode.app/Contents/MacOS/pynode")], shell=False, cwd=APP_DIR, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        elif operating_system == "linux":
+            pynode_process = subprocess.Popen([os.path.join(APP_DIR, "cef/linux/pynode")], shell=False, cwd=APP_DIR, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         time.sleep(1)
 
         global monitor_thread

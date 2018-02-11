@@ -1,6 +1,10 @@
 import urllib.request
 import json
-from pynode.main import *
+import networkx as nx
+import matplotlib.pyplot as plt
+
+G = nx.Graph()
+H = nx.Graph()
 
 from typing import Dict
 
@@ -193,42 +197,81 @@ def parse_recent_votes(recent_votes) -> Dict[int, Vote]:
 
 get_api_key()
 
-def pynode_run():
+vote_nodes = []
+democrat_nodes = []
+republican_nodes = []
+independent_nodes = []
+labels = {}
+votes_together = {}
 
-    graph.add_node(id="Fetching Data")
 
+def create_graph():
     members = get_members("senate")
     recent_votes = get_recent_votes("senate")
 
-    graph.remove_node("Fetching Data")
-
     for i in members:
-        graph.add_node(id=members[i].id, value=members[i].full_name)
+        G.add_node(members[i].id)
+        H.add_node(members[i].id)
+
+        if members[i].party == "D":
+            democrat_nodes.append(members[i].id)
+        elif members[i].party == "R":
+            republican_nodes.append(members[i].id)
+        else:
+            independent_nodes.append(members[i].id)
+
+        labels[members[i].id] = members[i].full_name
 
     for i in recent_votes:
         positions: Dict[str, str] = recent_votes[i].positions
 
-        # Preproccess the dictionary and add people who voted the same way to a new array.
-        # As the algorithm is O(n^2) for adding edges, this will likely reduce the amount of operations by approximately
-
         yes_list = []
         no_list = []
 
+        vote_nodes.append(recent_votes[i].roll_call)
+        G.add_node(recent_votes[i].roll_call)
+
         for j in positions:
-            print(positions[j])
             if positions[j].lower() == 'yes':
                 yes_list.append(j)
             elif positions[j].lower() == 'no':
                 no_list.append(j)
 
-        for member_x in yes_list:
-            for member_y in yes_list:
-                if member_x == member_y:
-                    continue
+        for x in yes_list:
+            for y in yes_list:
+                if H.get_edge_data(x, y) is not None:
+                    H[x][y]['weight'] += 1
+                else:
+                    H.add_edge(x, y, weight=1)
 
-                graph.add_edge(member_x, member_y)
+        for x in no_list:
+            for y in no_list:
+                if H.get_edge_data(x, y) is not None:
+                    H[x][y]['weight'] += 1
+                else:
+                    H.add_edge(x, y, weight=1)
 
-        break
 
+create_graph()
+edge_dict = {}
 
-begin_pynode(pynode_run)
+to_remove = []
+weights = []
+
+for u, v, data in H.edges(data=True):
+    if data['weight'] < 30:
+        to_remove.append([u, v])
+
+for k in to_remove:
+    H.remove_edge(k[0], k[1])
+
+for u, v in H.edges():
+    weights.append(H[u][v]['weight'] / 40)
+
+pos = nx.kamada_kawai_layout(H)
+nx.draw_networkx_nodes(H, pos, nodelist=republican_nodes, node_color='r')
+nx.draw_networkx_nodes(H, pos, nodelist=democrat_nodes, node_color='b')
+nx.draw_networkx_nodes(H, pos, nodelist=independent_nodes, node_color='y')
+nx.draw_networkx_edges(H, pos, alpha=0.8, width=weights)
+nx.draw_networkx_labels(H, pos, labels, font_size=4)
+plt.show()
